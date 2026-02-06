@@ -18,6 +18,7 @@ jobs:
       - name: Set deploy target
         id: target
         run: |
+          # main -> prod, qa -> qa, feature/* -> dev
           case "${{ github.ref }}" in
             refs/heads/main)        echo "app=mcp-tool-sql-v2-prod" >> $GITHUB_OUTPUT ;;
             refs/heads/qa)         echo "app=mcp-tool-sql-v2-qa" >> $GITHUB_OUTPUT ;;
@@ -29,6 +30,35 @@ jobs:
           flyctl apps create ${{ steps.target.outputs.app }} -y || true
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      # ✅ Sync secrets from GitHub → Fly app (source of truth = GitHub)
+      - name: Sync secrets to Fly
+        shell: bash
+        env:
+          APP_VERSION: ${{ secrets.APP_VERSION }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          LANGSMITH_TRACING: ${{ secrets.LANGSMITH_TRACING }}
+          LANGCHAIN_ENDPOINT: ${{ secrets.LANGCHAIN_ENDPOINT }}
+          LANGCHAIN_PROJECT: ${{ secrets.LANGCHAIN_PROJECT }}
+          LANGCHAIN_API_KEY: ${{ secrets.LANGCHAIN_API_KEY }}
+          MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+          MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+        run: |
+          flyctl secrets set \
+            APP_VERSION="${APP_VERSION}" \
+            OPENAI_API_KEY="${OPENAI_API_KEY}" \
+            LANGSMITH_TRACING="${LANGSMITH_TRACING}" \
+            LANGCHAIN_ENDPOINT="${LANGCHAIN_ENDPOINT}" \
+            LANGCHAIN_PROJECT="${LANGCHAIN_PROJECT}" \
+            LANGCHAIN_API_KEY="${LANGCHAIN_API_KEY}" \
+            MYSQL_HOST="${MYSQL_HOST}" \
+            MYSQL_PORT="${MYSQL_PORT}" \
+            MYSQL_USER="${MYSQL_USER}" \
+            MYSQL_PASSWORD="${MYSQL_PASSWORD}" \
+            MYSQL_DATABASE="${MYSQL_DATABASE}" \
+            -a "${{ steps.target.outputs.app }}"
       - run: flyctl deploy --remote-only --app ${{ steps.target.outputs.app }}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
