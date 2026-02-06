@@ -1,0 +1,16 @@
+{
+    "ok": true,
+    "request_id": "b26df979-ff9e-4c34-a24d-cfa7c58f771e",
+    "model": "gpt-4o-mini",
+    "latency_ms": 6997,
+    "version": "v:2.01",
+    "answer": "Here are 5 job titles in Ventura:\n\n1. Apcd Public Information Specialist\n2. Assistant Chief Probation Officer\n3. Appraiser Trainee\n\n(Note: Only 3 titles were found in the database.)",
+    "token_usage": {
+    "prompt_tokens": 4456,
+    "completion_tokens": 189,
+    "total_tokens": 4645,
+    "total_cost_usd": 0.0007818
+    },
+    "error": null
+}
+      
