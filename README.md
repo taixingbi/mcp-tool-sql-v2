@@ -92,4 +92,10 @@ curl -N -sS "https://mcp-tool-sql-v2-dev.fly.dev/mcp/" \
 ```
 
 
-# mcp-tool-sql-v2
+## Branch → App mapping
+
+| Branch        | Fly app               |
+|---------------|------------------------|
+| `feature/*`   | mcp-tool-sql-v2-dev    |
+| `qa`          | mcp-tool-sql-v2-qa     |
+| `main`        | mcp-tool-sql-v2-prod   |

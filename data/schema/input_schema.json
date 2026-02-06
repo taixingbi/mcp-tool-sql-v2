@@ -1,0 +1,14 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "tools/call",
+  "params": {
+    "name": "sql_agent",
+    "arguments": {
+      "args": {
+        "question": "List 5 job titles in Ventura",
+        "rate_limit": 10
+      }
+    }
+  }
+}

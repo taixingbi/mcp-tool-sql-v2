@@ -1,0 +1,29 @@
+# See https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
+
+name: Fly Deploy
+on:
+  push:
+    branches:
+      - main
+      - qa
+      - "feature/**"
+jobs:
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    concurrency: deploy-group
+    steps:
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Set deploy target
+        id: target
+        run: |
+          case "${{ github.ref }}" in
+            refs/heads/main)        echo "app=mcp-tool-sql-v2-prod" >> $GITHUB_OUTPUT ;;
+            refs/heads/qa)         echo "app=mcp-tool-sql-v2-qa" >> $GITHUB_OUTPUT ;;
+            refs/heads/feature/*)  echo "app=mcp-tool-sql-v2-dev" >> $GITHUB_OUTPUT ;;
+            *) echo "No deploy target for ${{ github.ref }}" && exit 1 ;;
+          esac
+      - run: flyctl deploy --remote-only --app ${{ steps.target.outputs.app }}
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
