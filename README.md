@@ -116,9 +116,9 @@ Then sync secrets from `.env` to each app:
 
 ```bash
 # Sync .env → Fly secrets for dev, qa, or prod
-bash env_to_fly_secrets.sh dev
-bash env_to_fly_secrets.sh qa
-bash env_to_fly_secrets.sh prod
+./env_to_fly_secrets.sh dev
+./env_to_fly_secrets.sh qa
+./env_to_fly_secrets.sh prod
 ```
 
-Requires `flyctl auth login` first. The script reads `.env` and runs `flyctl secrets import -a mcp-tool-sql-v2-{env}`.
+Requires `fly auth login` first.
