@@ -31,7 +31,7 @@ fi
 
 echo "🔐 Loading secrets from $ENV_FILE → Fly app: $APP_NAME"
 
-# Build secrets and run flyctl secrets set (so we can print the command)
+# Build secrets and run fly secrets set (so we can print the command)
 args=()
 while IFS= read -r line; do
   [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
@@ -43,11 +43,11 @@ while IFS= read -r line; do
 done < "$ENV_FILE"
 
 # Print command (values visible for verification)
-echo "   flyctl secrets set -a $APP_NAME \\"
+echo "   fly secrets set -a $APP_NAME \\"
 for i in "${!args[@]}"; do
   [[ $i -eq $((${#args[@]} - 1)) ]] && echo "     ${args[$i]}" || echo "     ${args[$i]} \\"
 done
 
-flyctl secrets set -a "$APP_NAME" "${args[@]}"
+fly secrets set -a "$APP_NAME" "${args[@]}"
 
 echo "✅ All secrets synced to $APP_NAME"

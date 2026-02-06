@@ -116,9 +116,25 @@ Then sync secrets from `.env` to each app:
 
 ```bash
 # Sync .env → Fly secrets for dev, qa, or prod
-bash env_to_fly_secrets.sh dev
-bash env_to_fly_secrets.sh qa
-bash env_to_fly_secrets.sh prod
+./env_to_fly_secrets.sh dev
+./env_to_fly_secrets.sh qa
+./env_to_fly_secrets.sh prod
 ```
 
-Requires `flyctl auth login` first. The script reads `.env` and runs `flyctl secrets import -a mcp-tool-sql-v2-{env}`.
+Or manually (use `fly` and quote values):
+
+```bash
+fly secrets set -a mcp-tool-sql-v2-dev \
+  OPENAI_API_KEY="sk-proj-..." \
+  LANGSMITH_TRACING="true" \
+  LANGCHAIN_ENDPOINT="https://api.smith.langchain.com" \
+  LANGCHAIN_PROJECT="project-holly-take-home" \
+  LANGCHAIN_API_KEY="lsv2_pt_..." \
+  MYSQL_HOST="mysql-host.example.com" \
+  MYSQL_PORT="24158" \
+  MYSQL_USER="avnadmin" \
+  MYSQL_PASSWORD="your-password" \
+  MYSQL_DATABASE="defaultdb"
+```
+
+Requires `fly auth login` first.
