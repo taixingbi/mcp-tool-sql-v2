@@ -121,20 +121,4 @@ Then sync secrets from `.env` to each app:
 ./env_to_fly_secrets.sh prod
 ```
 
-Or manually (use `fly` and quote values):
-
-```bash
-fly secrets set -a mcp-tool-sql-v2-dev \
-  OPENAI_API_KEY="sk-proj-..." \
-  LANGSMITH_TRACING="true" \
-  LANGCHAIN_ENDPOINT="https://api.smith.langchain.com" \
-  LANGCHAIN_PROJECT="project-holly-take-home" \
-  LANGCHAIN_API_KEY="lsv2_pt_..." \
-  MYSQL_HOST="mysql-host.example.com" \
-  MYSQL_PORT="24158" \
-  MYSQL_USER="avnadmin" \
-  MYSQL_PASSWORD="your-password" \
-  MYSQL_DATABASE="defaultdb"
-```
-
 Requires `fly auth login` first.
