@@ -156,7 +156,7 @@ curl -N -sS "https://mcp-tool-sql-v2-dev.fly.dev/mcp/" \
       "arguments": {
         "args": {
           "question": "Which jurisdiction has the highest average amount, and what is that amount?",
-          "limit": 3
+          "rate_limit": 3
         }
       }
     }
@@ -176,7 +176,7 @@ curl -N -sS "https://mcp-tool-sql-v2-qa.fly.dev/mcp/" \
       "arguments": {
         "args": {
           "question": "Which jurisdiction has the highest average amount, and what is that amount?",
-          "limit": 3
+          "rate_limit": 3
         }
       }
     }
@@ -196,7 +196,7 @@ curl -N -sS "https://mcp-tool-sql-v2-prod.fly.dev/mcp/" \
       "arguments": {
         "args": {
           "question": "Which jurisdiction has the highest average amount, and what is that amount?",
-          "limit": 3
+          "rate_limit": 3
         }
       }
     }
