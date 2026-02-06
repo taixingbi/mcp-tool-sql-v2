@@ -156,7 +156,47 @@ curl -N -sS "https://mcp-tool-sql-v2-dev.fly.dev/mcp/" \
       "arguments": {
         "args": {
           "question": "Which jurisdiction has the highest average amount, and what is that amount?",
-          "limit": 3
+          "rate_limit": 3
+        }
+      }
+    }
+  }'
+```
+
+```
+curl -N -sS "https://mcp-tool-sql-v2-qa.fly.dev/mcp/" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -d '{
+    "jsonrpc":"2.0",
+    "id": 2,
+    "method": "tools/call",
+    "params": {
+      "name": "sql_agent",
+      "arguments": {
+        "args": {
+          "question": "Which jurisdiction has the highest average amount, and what is that amount?",
+          "rate_limit": 3
+        }
+      }
+    }
+  }'
+```
+
+```
+curl -N -sS "https://mcp-tool-sql-v2-prod.fly.dev/mcp/" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -d '{
+    "jsonrpc":"2.0",
+    "id": 2,
+    "method": "tools/call",
+    "params": {
+      "name": "sql_agent",
+      "arguments": {
+        "args": {
+          "question": "Which jurisdiction has the highest average amount, and what is that amount?",
+          "rate_limit": 3
         }
       }
     }

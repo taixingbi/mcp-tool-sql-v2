@@ -18,6 +18,7 @@ jobs:
       - name: Set deploy target
         id: target
         run: |
+          # main -> prod, qa -> qa, feature/* -> dev
           case "${{ github.ref }}" in
             refs/heads/main)        echo "app=mcp-tool-sql-v2-prod" >> $GITHUB_OUTPUT ;;
             refs/heads/qa)         echo "app=mcp-tool-sql-v2-qa" >> $GITHUB_OUTPUT ;;
@@ -29,6 +30,7 @@ jobs:
           flyctl apps create ${{ steps.target.outputs.app }} -y || true
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
       - run: flyctl deploy --remote-only --app ${{ steps.target.outputs.app }}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
