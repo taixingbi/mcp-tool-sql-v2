@@ -3,7 +3,6 @@
 Examples for calling the `sql_agent` tool via JSON-RPC over HTTP. Use `-N` for no buffering (streaming) and `-sS` for silent + show errors.
 
 Input schema: `data/schema/input_schema.json`
-
 ---
 
 ### Local (uvicorn on localhost:8000)
