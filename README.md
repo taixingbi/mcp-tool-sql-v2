@@ -74,9 +74,10 @@ App naming: `mcp-tool-sql-v2-{env}` where `{env}` is `dev`, `qa`, or `prod`.
 brew install flyctl
 fly auth login
 fly launch
-fly secrets set OPENAI_API_KEY=xxx LANGCHAIN_API_KEY=xxx MYSQL_PASSWORD=xxx MYSQL_HOST=xxx MYSQL_PORT=xxx MYSQL_USER=xxx MYSQL_DATABASE=xxx
-flyctl auth token   # Add the token to GitHub → Settings → Secrets and variables → Actions as FLY_API_TOKEN.
-fly deploy   # deploys to app in fly.toml; use --app mcp-tool-sql-v2-qa or mcp-tool-sql-v2-prod for other envs
+# Sync .env to Fly app (dev | qa | prod)
+./env_to_fly_secrets.sh dev
+flyctl auth token   # Add to GitHub → Settings → Secrets → Actions as FLY_API_TOKEN
+fly deploy
 ```
 
 Pushes to `main` trigger auto-deploy via GitHub Actions (requires `FLY_API_TOKEN` secret).
@@ -111,10 +112,13 @@ fly apps create mcp-tool-sql-v2-qa
 fly apps create mcp-tool-sql-v2-prod
 ```
 
-Then set secrets on each app (or use `fly secrets set` with `--app mcp-tool-sql-v2-qa` etc.):
+Then sync secrets from `.env` to each app:
 
 ```bash
-fly secrets set OPENAI_API_KEY=xxx MYSQL_HOST=xxx MYSQL_PORT=xxx MYSQL_USER=xxx MYSQL_PASSWORD=xxx MYSQL_DATABASE=xxx --app mcp-tool-sql-v2-dev
-fly secrets set OPENAI_API_KEY=xxx MYSQL_HOST=xxx MYSQL_PORT=xxx MYSQL_USER=xxx MYSQL_PASSWORD=xxx MYSQL_DATABASE=xxx --app mcp-tool-sql-v2-qa
-fly secrets set OPENAI_API_KEY=xxx MYSQL_HOST=xxx MYSQL_PORT=xxx MYSQL_USER=xxx MYSQL_PASSWORD=xxx MYSQL_DATABASE=xxx --app mcp-tool-sql-v2-prod
+# Sync .env → Fly secrets for dev, qa, or prod
+./env_to_fly_secrets.sh dev
+./env_to_fly_secrets.sh qa
+./env_to_fly_secrets.sh prod
 ```
+
+Requires `fly auth login` first.
