@@ -24,6 +24,11 @@ jobs:
             refs/heads/feature/*)  echo "app=mcp-tool-sql-v2-dev" >> $GITHUB_OUTPUT ;;
             *) echo "No deploy target for ${{ github.ref }}" && exit 1 ;;
           esac
+      - name: Create app if not exists
+        run: |
+          flyctl apps create ${{ steps.target.outputs.app }} -y || true
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       - run: flyctl deploy --remote-only --app ${{ steps.target.outputs.app }}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
